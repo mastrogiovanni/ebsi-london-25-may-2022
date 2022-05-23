@@ -34,7 +34,9 @@ helm install is integration-services \
 
 ## Expose to inside
 
+```
 kubectl port-forward svc/is-kong-proxy 3000:80
+```
 
 ## Showcase IS
 
@@ -46,15 +48,17 @@ kubectl port-forward svc/is-kong-proxy 3000:80
 
 ## Create Identity
 
-- Access to http://localhost:3000
+- Access to https://ebsi.k8s-chrysalis.iota.cafe/
 - Create an identity
 - Download the identity
 
 ## Configure Admin identity
 
+```
 npm install -g @iota/is-cli
-is config -k "" -g http://localhost:3000
+is config -k "" -g https://ebsi.k8s-chrysalis.iota.cafe/
 is make-admin -i did:iota:8jRvk98kF3izY2Rp8NcZNhTSkw4vyGSPw8bFmTbJQbYn -d is -n default
+```
 
 ## Example DPP
 (https://github.com/iotaledger/is-ict-dpp)
