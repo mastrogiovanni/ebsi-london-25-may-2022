@@ -11,6 +11,7 @@
 		toDppIdentity
 	} from '@iota/is-ict-dpp';
 	import { ApiVersion, IdentityClient, ChannelClient, type ClientConfig } from '@iota/is-client';
+	import { createJsonDataUrl } from '../lib/utils';
 
 	const defaultConfig: ClientConfig = {
 		apiKey: import.meta.env.VITE_API_KEY as string,
@@ -42,28 +43,39 @@
 
 	let owner: IdentityDto, repairer: IdentityDto, newOwner: IdentityDto, repairerVC: any;
 
+	let _owner: any;
+	let _repairer: any;
+	let _newOwner: any;
+	let _repairerVC: any;
+
 	async function createIdentities(context: Context) {
 		let description = '';
 		let badges = [];
 		context.set('title', 'Creation identity for all actors');
-		owner = toDppIdentity(await new IdentityClient(defaultConfig).create('owner' + uuidv4()));
+		_owner = await new IdentityClient(defaultConfig).create('owner' + uuidv4())
+		owner = toDppIdentity(_owner);
 		description = append(context, description, 'Created owner');
 		badges.push({
-			name: 'owner',
-			url: 'https://explorer.iota.org/mainnet/identity-resolver/' + owner.did
+			name: 'owner.json',
+			url: 'https://explorer.iota.org/mainnet/identity-resolver/' + owner.did,
+			object: _owner
 		});
 		context.set('badges', badges);
-		repairer = toDppIdentity(await new IdentityClient(defaultConfig).create('repairer' + uuidv4()));
+		_repairer = await new IdentityClient(defaultConfig).create('repairer' + uuidv4());
+		repairer = toDppIdentity(_repairer);
 		badges.push({
-			name: 'repairer',
-			url: 'https://explorer.iota.org/mainnet/identity-resolver/' + repairer.did
+			name: 'repairer.json',
+			url: 'https://explorer.iota.org/mainnet/identity-resolver/' + repairer.did,
+			object: _repairer
 		});
 		context.set('badges', badges);
 		description = append(context, description, 'Created repairer');
-		newOwner = toDppIdentity(await new IdentityClient(defaultConfig).create('neOwner' + uuidv4()));
+		_newOwner = await new IdentityClient(defaultConfig).create('newOwner' + uuidv4());
+		newOwner = toDppIdentity(_newOwner);
 		badges.push({
-			name: 'new owner',
-			url: 'https://explorer.iota.org/mainnet/identity-resolver/' + newOwner.did
+			name: 'new_owner.json',
+			url: 'https://explorer.iota.org/mainnet/identity-resolver/' + newOwner.did,
+			object: _newOwner
 		});
 		context.set('badges', badges);
 		description = append(context, description, 'Created newOwner');
@@ -72,6 +84,12 @@
 			.createCredential(manager, owner.did, dppClient.getOwnershipCredentialType() as any, {
 				role: 'repairer'
 			});
+		badges.push({
+			name: 'vc.json',
+			url: '#!',
+			object: repairerVC
+		});
+		context.set('badges', badges);
 		description = append(context, description, 'Created Repairer VC');
 	}
 
@@ -209,9 +227,14 @@
 <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Album example</h1>
-        <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-        <p>
+        <h1 class="fw-light">EBSI DPP Demo</h1>
+        <p class="lead text-muted">
+			In this demo we will showcase a happy path lifecycle for a device.<br/>
+			After an initial phase where we will create identities and credentials, we will do the following:<br/>
+			* Registering of device<br/>
+			* Update DPP
+		</p>
+	<p>
           <a href="#!" on:click={start} class="btn btn-primary my-2">Start</a>
 		  <!--
           <a href="#" class="btn btn-secondary my-2">Secondary action</a>
@@ -250,7 +273,14 @@
 													{#if badge.text}
 														-
 													{:else}
-														<a href={badge.url} target="_blank" class="btn btn-sm btn-outline-secondary">{badge.name}</a>
+														<a 	
+															class="mt-4 btn btn-primary btn-block 
+															w-100 btn-lg" href="#!"
+															role="button"
+															download="identity.json"
+														>
+															{badge.name}
+														</a>
 													{/if}
 												{/each}
 											</div>
