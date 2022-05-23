@@ -1,0 +1,26 @@
+{
+  "doc": {
+    "id": "did:iota:2datkm23penetwP9cpYm9EwBrT95CzU1C3afVuHYFwv4",
+    "authentication": [
+      {
+        "id": "did:iota:2datkm23penetwP9cpYm9EwBrT95CzU1C3afVuHYFwv4#key",
+        "controller": "did:iota:2datkm23penetwP9cpYm9EwBrT95CzU1C3afVuHYFwv4",
+        "type": "Ed25519VerificationKey2018",
+        "publicKeyBase58": "6AeUpYewrKKXzxRK5qzLPXhy9MsbccSL87Dn5x7GAU8Z"
+      }
+    ],
+    "created": "2022-05-13T13:34:17Z",
+    "updated": "2022-05-13T13:34:17Z",
+    "proof": {
+      "type": "JcsEd25519Signature2020",
+      "verificationMethod": "#key",
+      "signatureValue": "5TcZTLgGA8r5TuCjeYGc77XYh53Hvp463yPsvAJvWxohuz4g6AsUXRBzKQbS26o2pxks8QYLhq5befzbemftcPTW"
+    }
+  },
+  "key": {
+    "type": "ed25519",
+    "public": "6AeUpYewrKKXzxRK5qzLPXhy9MsbccSL87Dn5x7GAU8Z",
+    "secret": "2VPRjBSKe3vbwVNiA2pAbi5E2Evcb2anxZwWf6uhM4pE",
+    "encoding": "base58"
+  }
+}
