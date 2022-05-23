@@ -15,7 +15,7 @@ Every shell:
 export KUBECONFIG='/home/michele/Projects/iota/ebsi-london-25-may-2022/ebsi.yaml'
 ```
 
-## Deploy IS
+## Deploy Integration Services
 
 Showcase how simple is to install IS in a Kubernetes cluster (EBSI):
 
@@ -38,7 +38,8 @@ helm install is integration-services \
 kubectl port-forward svc/is-kong-proxy 3000:80
 ```
 
-## Showcase IS
+## Example Integration Services
+(https://github.com/iotaledger/integration-services)
 
 (identities are self-sovereign but we will create all at once)
 
@@ -56,8 +57,11 @@ kubectl port-forward svc/is-kong-proxy 3000:80
 
 ```
 npm install -g @iota/is-cli
-is config -k "" -g https://ebsi.k8s-chrysalis.iota.cafe/
-is make-admin -i did:iota:8jRvk98kF3izY2Rp8NcZNhTSkw4vyGSPw8bFmTbJQbYn -d is -n default
+```
+
+```
+is config -k "EBSIKEY" -g https://ebsi.k8s-chrysalis.iota.cafe/
+is make-admin -i did:iota:5bCtK6VJBtzGiEb6kBtC6GEP5FweYYXC6EQtoEtEU7S5 -d is -n default
 ```
 
 ## Example DPP
